@@ -1,4 +1,3 @@
-
 # FAN-SPEED-CONTROLLER-SYSTEM-USING-TEMPERATURE-SENSOR
 ## EXP 1(A) FAN SPEED CONTROLLER SYSTEM USING TEMPERATURE SENSOR
 
@@ -12,10 +11,7 @@
 	Temperature Sensor (DHT11/DHT22/TMP36)
 
 # Circuit Diagram:
-
----
-To upload
---
+<img width="1247" height="666" alt="image" src="https://github.com/user-attachments/assets/7c506d60-8330-4c27-a8aa-494e4bd868b5" />
 
 # Procedure // Modify the procedure based on your circuit
 
@@ -56,13 +52,39 @@ Step 7: Save Your Work
 
 
 # Program
-
----
-To upload
---
+```
+const int analogIn = A0;
+int humiditysensorOutput = 0;
+// Defining Variables
+int RawValue= 0;
+double Voltage = 0;
+double tempC = 0;
+double tempF = 0;
+void setup(){  
+  Serial.begin(9600);
+  pinMode(A1, INPUT);
+}
+void loop(){
+  RawValue = analogRead(analogIn);
+  Voltage = (RawValue / 1023.0) * 5000; // 5000 to get millivots.
+  tempC = (Voltage-500) * 0.1; // 500 is the offset
+  tempF = (tempC * 1.8) + 32; // convert to F  
+  Serial.print("Raw Value = " );                  
+  Serial.print(RawValue);      
+  Serial.print("\t milli volts = ");
+  Serial.print(Voltage,0); //
+  Serial.print("\t Temperature in C = ");
+  Serial.print(tempC,1);
+  Serial.print("\t Temperature in F = ");
+  Serial.println(tempF,1);
+  humiditysensorOutput = analogRead(A1);
+  Serial.print("Humidity: "); // Printing out Humidity Percentage
+  Serial.print(map(humiditysensorOutput, 0, 1023, 10, 70));
+  Serial.println("%");
+  delay(5000);  //iterate every 5 seconds
+}
+```
 
 # Result
-
----
-To upload
---
+<img width="1774" height="773" alt="image" src="https://github.com/user-attachments/assets/aa6a32f0-d4ab-4610-ad2a-94935a412cbf" />
+The temperature and humidity values are measured using DHT11/DHT22/TMP36 sensor with Arduino UNO Board/ESP-32 and Simulated using Tinker CAD.
